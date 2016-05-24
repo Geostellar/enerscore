@@ -9,8 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joseph Tutela"]
   spec.email         = ["joseph.tutela@geostellar.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = "Enerscore Integration"
   spec.homepage      = "https://github.com/geostellar/enerscore"
   spec.license       = "MIT"
 
