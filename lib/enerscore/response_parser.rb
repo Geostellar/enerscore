@@ -15,7 +15,12 @@ module Enerscore
       elsif @response.is_a?(Array)
         @status = :success
       else
-        raise 'Unhandled request type from Enerscore API'
+        if @response.respond_to?(:code) &&
+            @response.code.between?(500, 600)
+          @status = :server_error
+        else
+          raise 'Unhandled request type from Enerscore API'
+        end
       end
     end
 

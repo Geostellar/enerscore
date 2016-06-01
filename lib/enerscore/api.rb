@@ -23,7 +23,7 @@ module Enerscore
 
     def pre_cache(address, object)
       if cache
-      cache.write address, object
+        cache.write address, object
       else
         raise 'No cache present'
       end
@@ -38,7 +38,9 @@ module Enerscore
           cached
         else
           get_request = self.class.get url
-          cache.write address, get_request
+          if get_request.code == 200
+            cache.write address, get_request
+          end
           get_request
         end
       else

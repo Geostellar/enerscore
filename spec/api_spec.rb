@@ -110,6 +110,17 @@ describe Enerscore::Api do
             expect(cache_store.get(key)).to_not be_nil
           end
         end
+
+        context 'when an enerscore returns an error request' do
+          let(:address) { 'New York, NY, USA' }
+          let(:get_request) { double(:get_request, code: 502) }
+          before { allow(Enerscore::Api).to receive(:get).and_return(get_request) }
+          it { is_expected.to be_nil }
+
+          it 'does not change the result' do
+            expect{ subject }.to_not change{ cache_store.keys.count }
+          end
+        end
       end
     end
   end
