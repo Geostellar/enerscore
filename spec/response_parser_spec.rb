@@ -3,7 +3,11 @@ require 'spec_helper'
 RSpec.describe Enerscore::ResponseParser do
 
   def read_api_json(name)
-    JSON.parse(File.read("spec/fixtures/api/#{name}.json"))
+    JSON.parse(read_api_file("#{name}.json"))
+  end
+
+  def read_api_file(name)
+    File.read "spec/fixtures/api/#{name}"
   end
 
   let(:parser) { Enerscore::ResponseParser.new json }
@@ -111,6 +115,39 @@ RSpec.describe Enerscore::ResponseParser do
     describe '#success' do
       subject { parser.success? }
       it { is_expected.to eq true }
+    end
+  end
+
+  context 'when the API returns a server error' do
+    let(:json) { double(:response, code: 504, data: read_api_file('server_error.html')) }
+    describe '#status' do
+      subject { parser.status }
+      it { is_expected.to eq :server_error }
+    end
+
+    describe '#error?' do
+      subject { parser.error? }
+      it { is_expected.to eq false }
+    end
+
+    describe '#no_results?' do
+      subject { parser.no_results? }
+      it { is_expected.to eq false }
+    end
+
+    describe '#results' do
+      subject { parser.results }
+      it { is_expected.to be_nil }
+    end
+
+    describe '#result' do
+      subject { parser.result }
+      it { is_expected.to be_nil }
+    end
+
+    describe '#success' do
+      subject { parser.success? }
+      it { is_expected.to eq false }
     end
   end
 
