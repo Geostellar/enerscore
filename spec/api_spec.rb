@@ -121,6 +121,28 @@ describe Enerscore::Api do
             expect{ subject }.to_not change{ cache_store.keys.count }
           end
         end
+
+        context 'when an enerscore request takes longer than expected' do
+          let(:address) { 'New York, NY, USA' }
+          let(:get_request) { double(:get_request, code: 502) }
+          before { allow(Enerscore::Api).to receive(:get).and_raise(Net::OpenTimeout) }
+          it { is_expected.to be_nil }
+
+          it 'does not change the result' do
+            expect{ subject }.to_not change{ cache_store.keys.count }
+          end
+        end
+
+        context 'when an enerscore request takes longer than expected' do
+          let(:address) { 'New York, NY, USA' }
+          let(:get_request) { double(:get_request, code: 502) }
+          before { allow(Enerscore::Api).to receive(:get).and_raise(Net::ReadTimeout) }
+          it { is_expected.to be_nil }
+
+          it 'does not change the result' do
+            expect{ subject }.to_not change{ cache_store.keys.count }
+          end
+        end
       end
     end
   end

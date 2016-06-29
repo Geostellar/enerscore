@@ -5,6 +5,8 @@ module Enerscore
     include HTTParty
 
     base_uri "http://api-alpha.enerscore.com/api"
+    default_timeout 2
+
     NEIGHBORS_URI = "/address/neighbors/"
 
     attr_accessor :cache
@@ -46,6 +48,10 @@ module Enerscore
       else
         self.class.get url
       end
+    rescue Net::OpenTimeout => e
+      :network_timeout
+    rescue Net::ReadTimeout => e
+      :network_timeout
     end
 
     def fetch_uri(address)

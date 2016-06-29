@@ -14,6 +14,8 @@ module Enerscore
         end
       elsif @response.is_a?(Array)
         @status = :success
+      elsif @response == :network_timeout
+        @status = :network_timeout
       else
         if @response.respond_to?(:code) &&
             @response.code.between?(500, 600)
