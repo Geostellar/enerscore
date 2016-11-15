@@ -31,11 +31,19 @@ describe Enerscore::Api do
     context 'when a cache is present' do
       subject { api.fetch address }
       let(:cache_store) { Redis.new }
+
+      shared_examples 'Non-cacheable request' do
+        it 'does not cache the network request' do
+          expect { subject }.to_not change { cache_store.keys.count }
+        end
+      end
+
       context 'when the value is previously cached' do
         before { api.fetch address }
 
         context 'when an enerscore report is available for the address' do
           let(:address) { '1409 Cold Canyon Rd, Calabasas, CA, 91302' }
+
           it 'returns the results' do
             expect(subject.address1).to eq '1409 COLD CANYON RD'
           end
@@ -50,22 +58,16 @@ describe Enerscore::Api do
 
         context 'when an enerscore report is not available for the address' do
           let(:address) { '729 6th St NW, Washington, DC, 20001' }
-          it { is_expected.to be_nil }
 
-          it 'does not make a network request' do
-            expect(Enerscore::Api).to_not receive(:get)
-            subject
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore report is not available for an incomplete address' do
           let(:address) { 'New York, NY, USA' }
-          it { is_expected.to be_nil }
 
-          it 'does not make a network request' do
-            expect(Enerscore::Api).to_not receive(:get)
-            subject
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
       end
 
@@ -89,59 +91,43 @@ describe Enerscore::Api do
 
         context 'when an enerscore report is not available for the address' do
           let(:address) { '729 6th St NW, Washington, DC, 20001' }
-          it { is_expected.to be_nil }
 
-          it 'caches the result' do
-            expect(cache_store.keys).to be_empty
-            subject
-            key = cache_store.keys[0]
-            expect(cache_store.get(key)).to_not be_nil
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore report is not available for an incomplete address' do
           let(:address) { 'New York, NY, USA' }
-          it { is_expected.to be_nil }
 
-          it 'caches the result' do
-            expect(cache_store.keys).to be_empty
-            subject
-            key = cache_store.keys[0]
-            expect(cache_store.get(key)).to_not be_nil
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore returns an error request' do
           let(:address) { 'New York, NY, USA' }
           let(:get_request) { double(:get_request, code: 502) }
           before { allow(Enerscore::Api).to receive(:get).and_return(get_request) }
-          it { is_expected.to be_nil }
 
-          it 'does not change the result' do
-            expect{ subject }.to_not change{ cache_store.keys.count }
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore request takes longer than expected' do
           let(:address) { 'New York, NY, USA' }
           let(:get_request) { double(:get_request, code: 502) }
           before { allow(Enerscore::Api).to receive(:get).and_raise(Net::OpenTimeout) }
-          it { is_expected.to be_nil }
 
-          it 'does not change the result' do
-            expect{ subject }.to_not change{ cache_store.keys.count }
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore request takes longer than expected' do
           let(:address) { 'New York, NY, USA' }
           let(:get_request) { double(:get_request, code: 502) }
           before { allow(Enerscore::Api).to receive(:get).and_raise(Net::ReadTimeout) }
-          it { is_expected.to be_nil }
 
-          it 'does not change the result' do
-            expect{ subject }.to_not change{ cache_store.keys.count }
-          end
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
         end
       end
     end
