@@ -129,6 +129,24 @@ describe Enerscore::Api do
           it { is_expected.to be_nil }
           it_behaves_like 'Non-cacheable request'
         end
+
+        context 'when the enerscore host is not available' do
+          let(:address) { 'New York, NY, USA' }
+          let(:get_request) { double(:get_request, code: 502) }
+          before { allow(Enerscore::Api).to receive(:get).and_raise(SocketError) }
+
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
+        end
+
+        context 'when the enerscore request fails' do
+          let(:address) { 'New York, NY, USA' }
+          let(:get_request) { double(:get_request, code: 502) }
+          before { allow(Enerscore::Api).to receive(:get).and_raise(Exception) }
+
+          it { is_expected.to be_nil }
+          it_behaves_like 'Non-cacheable request'
+        end
       end
     end
   end
