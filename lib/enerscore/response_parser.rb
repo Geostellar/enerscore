@@ -6,6 +6,8 @@ module Enerscore
       @response = response
       if @response == :network_timeout
         @status = :network_timeout
+      elsif @response == :request_exception
+        @status = :request_exception
       elsif server_error_response?(response)
         @status = :server_error
       else

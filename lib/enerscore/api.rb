@@ -52,6 +52,10 @@ module Enerscore
       :network_timeout
     rescue Net::ReadTimeout => e
       :network_timeout
+    rescue SocketError => e
+      :network_timeout
+    rescue Exception => e
+      :request_exception
     end
 
     def fetch_uri(address)
