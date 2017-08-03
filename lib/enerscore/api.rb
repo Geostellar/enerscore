@@ -4,16 +4,16 @@ module Enerscore
   class Api
     include HTTParty
 
-    base_uri "http://api-alpha.enerscore.com/api"
+    base_uri "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080"
     default_timeout 2
 
-    NEIGHBORS_URI = "/address/neighbors/"
+    FULL_ADDRESS_URI = "/addresses/search/fulladdress.json"
 
     attr_accessor :cache
 
     def initialize(cache_store=nil)
       if cache_store
-        @cache = Enerscore::Cache.new(cache_store, NEIGHBORS_URI)
+        @cache = Enerscore::Cache.new(cache_store, FULL_ADDRESS_URI)
       end
     end
 
@@ -59,9 +59,10 @@ module Enerscore
     end
 
     def fetch_uri(address)
-      NEIGHBORS_URI +
-        URI.encode_www_form_component(address) +
-        ".json"
+      FULL_ADDRESS_URI +
+        '?' +
+        'address=' +
+        URI.encode_www_form_component(address)
     end
   end
 end
