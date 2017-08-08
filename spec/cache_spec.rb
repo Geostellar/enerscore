@@ -85,9 +85,9 @@ RSpec.describe Enerscore::Api do
     subject { cache.read key }
     let(:key) { 'test_key' }
     context 'when a value is present' do
-      before { cache_store.set cache.send(:cache_key, key), value.to_json }
+      before { cache_store.set cache.send(:cache_key, key), value }
       let(:value) { { "test_object" => 'test', "another" => 'test2' } }
-      it { is_expected.to eq value }
+      it { is_expected.to eq value.to_s }
     end
 
     context 'when a vaule is not present' do
@@ -101,7 +101,7 @@ RSpec.describe Enerscore::Api do
     it 'writes the value to the cache as a json string' do
       subject
       cache_key = cache_store.keys[0]
-      expect(cache_store.get(cache_key)).to eq value.to_json
+      expect(cache_store.get(cache_key)).to eq value.to_s
     end
   end
 
@@ -109,7 +109,7 @@ RSpec.describe Enerscore::Api do
     subject { cache.delete key }
 
     context 'when the value is present' do
-    before { cache_store.set cache.send(:cache_key, key), value.to_json }
+    before { cache_store.set cache.send(:cache_key, key), value }
     it { is_expected.to eq true }
     end
 

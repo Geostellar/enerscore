@@ -19,13 +19,13 @@ module Enerscore
       ck = cache_key(key)
 
       if value = @cache_store.get(ck)
-        JSON.parse value
+        value
       end
     end
 
     def write(key, value)
       ck = cache_key(key)
-      @cache_store.set ck, value.to_json
+      @cache_store.set ck, value
     end
 
     def delete(key)

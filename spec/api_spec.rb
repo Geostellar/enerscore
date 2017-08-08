@@ -9,16 +9,16 @@ describe Enerscore::Api do
     context 'when a cache is not present' do
       before { expect(cache_store).to be_nil }
       context 'when an enerscore report is available for the address' do
-        let(:address) { '1409 Cold Canyon Rd, Calabasas, CA, 91302' }
+        let(:address) { '1409 Cold Canyon Rd, Calabasas, CA 91302' }
         it 'returns the results' do
-          expect(subject.address1).to eq '1409 COLD CANYON RD'
+          expect(subject.street).to eq '1409 Cold Canyon Rd'
         end
 
         it { is_expected.to be_an_instance_of(Enerscore::Result) }
       end
 
       context 'when an enerscore report is not available for the address' do
-        let(:address) { '729 6th St NW, Washington, DC, 20001' }
+        let(:address) { '729 6th St NW, Washington, DC 20001' }
         it { is_expected.to be_nil }
       end
 
@@ -42,10 +42,10 @@ describe Enerscore::Api do
         before { api.fetch address }
 
         context 'when an enerscore report is available for the address' do
-          let(:address) { '1409 Cold Canyon Rd, Calabasas, CA, 91302' }
+          let(:address) { '1409 Cold Canyon Rd, Calabasas, CA 91302' }
 
           it 'returns the results' do
-            expect(subject.address1).to eq '1409 COLD CANYON RD'
+            expect(subject.street).to eq '1409 Cold Canyon Rd'
           end
 
           it { is_expected.to be_an_instance_of(Enerscore::Result) }
@@ -57,7 +57,7 @@ describe Enerscore::Api do
         end
 
         context 'when an enerscore report is not available for the address' do
-          let(:address) { '729 6th St NW, Washington, DC, 20001' }
+          let(:address) { '729 6th St NW, Washington, DC 20001' }
 
           it { is_expected.to be_nil }
           it_behaves_like 'Non-cacheable request'
@@ -74,33 +74,31 @@ describe Enerscore::Api do
       context 'when the value is not previously cached' do
         subject { api.fetch address }
         context 'when an enerscore report is available for the address' do
-          let(:address) { '1409 Cold Canyon Rd, Calabasas, CA, 91302' }
+          let(:address) { '1409 Cold Canyon Rd, Calabasas, CA 91302' }
           it 'returns the results' do
-            expect(subject.address1).to eq '1409 COLD CANYON RD'
+            expect(subject.street).to eq '1409 Cold Canyon Rd'
           end
 
           it 'caches the result' do
             expect(cache_store.keys).to be_empty
             subject
             key = cache_store.keys[0]
-            expect(cache_store.get(key)).to include '1409 COLD CANYON'
+            expect(cache_store.get(key)).to include '1409 Cold Canyon'
           end
 
           it { is_expected.to be_an_instance_of(Enerscore::Result) }
         end
 
         context 'when an enerscore report is not available for the address' do
-          let(:address) { '729 6th St NW, Washington, DC, 20001' }
+          let(:address) { '729 6th St NW, Washington, DC 20001' }
 
           it { is_expected.to be_nil }
-          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore report is not available for an incomplete address' do
           let(:address) { 'New York, NY, USA' }
 
           it { is_expected.to be_nil }
-          it_behaves_like 'Non-cacheable request'
         end
 
         context 'when an enerscore returns an error request' do
@@ -160,7 +158,7 @@ describe Enerscore::Api do
       it 'caches the value 'do
         subject
         key = cache_store.keys[0]
-        expect(cache_store.get(key)).to eq value.to_json
+        expect(cache_store.get(key)).to eq value.to_s
       end
     end
 

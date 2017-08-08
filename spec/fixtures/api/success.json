@@ -1,116 +1,69 @@
-[
-  {
-    "_from_url": "http://api-alpha.enerscore.com/api/address/neighbors/1409+Cold+Canyon+Rd%2C+Calabasas%2C+CA+91302%2C+USA.json",
-    "addressId": 372697,
-    "address1": "1409 COLD CANYON RD",
-    "address2": null,
-    "addressTown": "Calabasas",
-    "addressState": "CA",
-    "addressPostalCode": "91302",
-    "addressCountry": null,
-    "electricBaseloadTotal": 28561.244,
-    "electricBaseloadTotalType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "domesticHotWaterTotal": 345.18,
-    "domesticHotWaterTotalType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "heatingUsage": 488.23,
-    "heatingUsageType": {
-      "energyTypeId": 1,
-      "energyTypeCode": "therms",
-      "energyTypeDescription": "Thermal Units"
-    },
-    "coolingUsage": 884.3,
-    "coolingUsageType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "energyScore": {
-      "energyScoreId": 7,
-      "energyScoreIndex": 60,
-      "energyScore": "C+",
-      "minKbtu": 59545,
-      "maxKbtu": 66555
-    },
-    "enteredBy": 1,
-    "enteredDate": "2016-05-23",
-    "energyCost": 3629.97,
-    "editedBy": 1,
-    "editedDate": "2016-05-23",
-    "apn": "4455036018",
-    "fips": "06037",
-    "location": null,
-    "yearBuilt": 2005,
-    "yearBuiltEffective": 2005,
-    "livingSize": 22078,
-    "zillowId": null,
-    "calculatedHers": 70.00857198246364,
-    "hers_rating": null,
-    "hers_energy_cost": null,
-    "messages": null
+{
+  "_embedded": {
+    "addresses": [
+      {
+        "obiId": 6396,
+        "street": "143 County Road 20",
+        "city": "Marbury",
+        "state": "AL",
+        "zipCode": "36051",
+        "fullAddress": "143 County Road 20, Marbury, AL 36051",
+        "estHersScore": "F",
+        "hotWater": 133.29488,
+        "heating": 13176.524,
+        "baseLoad": 4883,
+        "cooling": 7245.031,
+        "heatingFuelType": "electric",
+        "dhwFuelType": "gas",
+        "coolingFuelType": "electric",
+        "baseLoadFuelType": "electric",
+        "total_cost": 3284.701,
+        "_links": {
+          "self": {
+            "href": "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080/addresses/182"
+          },
+          "onboardAddresses": {
+            "href": "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080/addresses/182"
+          }
+        }
+      },
+      {
+        "obiId": 6397,
+        "street": "143 County Road 20",
+        "city": "Marbury",
+        "state": "AL",
+        "zipCode": "36051",
+        "fullAddress": "143 County Road 20, Marbury, AL 36051",
+        "estHersScore": "F",
+        "hotWater": 133.29488,
+        "heating": 13176.524,
+        "baseLoad": 4883,
+        "cooling": 7245.031,
+        "heatingFuelType": "electric",
+        "dhwFuelType": "gas",
+        "coolingFuelType": "electric",
+        "baseLoadFuelType": "electric",
+        "total_cost": 3284.701,
+        "_links": {
+          "self": {
+            "href": "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080/addresses/182"
+          },
+          "onboardAddresses": {
+            "href": "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080/addresses/182"
+          }
+        }
+      }
+    ]
   },
-  {
-    "_from_url": "http://api-alpha.enerscore.com/api/address/neighbors/729%206th%20St%20NE,%20Washington,%20DC%2020002,%20USA",
-    "addressId": 372657,
-    "address1": "729 6TH ST NE",
-    "address2": null,
-    "addressTown": "Washington",
-    "addressState": "DC",
-    "addressPostalCode": "20002",
-    "addressCountry": null,
-    "electricBaseloadTotal": 19881.818,
-    "electricBaseloadTotalType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "domesticHotWaterTotal": 453.22,
-    "domesticHotWaterTotalType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "heatingUsage": 989.55,
-    "heatingUsageType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "coolingUsage": 143.45,
-    "coolingUsageType": {
-      "energyTypeId": 2,
-      "energyTypeCode": "kwh",
-      "energyTypeDescription": "Kilowat Hours"
-    },
-    "energyScore": {
-      "energyScoreId": 9,
-      "energyScoreIndex": 84,
-      "energyScore": "C-",
-      "minKbtu": 73305,
-      "maxKbtu": 80110
-    },
-    "enteredBy": 1,
-    "enteredDate": "2016-05-20",
-    "energyCost": 2187,
-    "editedBy": 1,
-    "editedDate": "2016-05-20",
-    "apn": "0859    0806",
-    "fips": "11001",
-    "location": null,
-    "yearBuilt": 1910,
-    "yearBuiltEffective": 2012,
-    "livingSize": 1442,
-    "zillowId": null,
-    "calculatedHers": 93.51429257746817,
-    "hers_rating": null,
-    "hers_energy_cost": null,
-    "messages": null
+  "_links": {
+    "self": {
+      "href": "http://ec2-54-209-120-96.compute-1.amazonaws.com:8080/addresses/search/fulladdress?address=143%20County%20Road%2020,%20Marbury,%20AL%2036051"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0
   }
-]
+}
